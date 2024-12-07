@@ -1,5 +1,8 @@
 import os
+from dotenv import load_dotenv
 from groq import Groq
+
+load_dotenv()
 
 def log_error(message):
     """Logs error messages to a file."""
@@ -9,8 +12,13 @@ def log_error(message):
 def summarize_text(text, tone):
     """Uses Groq's chat completion API to summarize text."""
     try:
-        # Set up the Groq client with your API key
-        client = Groq(api_key="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")
+        # Get the API key from the environment variables
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            raise ValueError("API key is missing. Please check your .env file.")
+
+        # Set up the Groq client with the API key
+        client = Groq(api_key=api_key)
 
         # Construct the prompt for summarization
         prompt = f"Summarize the following text in a {tone.lower()} tone:\n\n{text}"

@@ -3,3 +3,11 @@ Error summarizing text: 404 Client Error: Not Found for url: https://api.groq.co
 Error summarizing text: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/engines/llama3-8b-8192/completions
 Error summarizing text: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/engines/llama3-8b-8192/completions
 Error summarizing text: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/engines/llama3-8b-8192/completions
+Error during summarization: GROQ_API_KEY environment variable is not set
+Error during summarization: GROQ_API_KEY environment variable is not set
+Error during summarization: GROQ_API_KEY environment variable is not set
+Error during summarization: GROQ_API_KEY environment variable is not set
+Error during summarization: GROQ_API_KEY environment variable is not set
+An unexpected error occurred in the main function: GROQ_API_KEY environment variable is not set
+An unexpected error occurred in the main function: GROQ_API_KEY environment variable is not set
+An unexpected error occurred in the main function: GROQ_API_KEY environment variable is not set

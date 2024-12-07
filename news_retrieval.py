@@ -1,8 +1,19 @@
+import os
 import requests
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 
 def fetch_news(prompt):
+    # Load the API key from the environment variables
+    API_KEY = os.getenv("NEWS_API_KEY")
+    if not API_KEY:
+        raise ValueError("News API key is missing. Please check your .env file.")
+
     # Google News API Endpoint
-    API_KEY = "9f87ec037ca344559626e8dd1126a5b2"
+    
     endpoint = f"https://newsapi.org/v2/everything"
 
     # Query the API with the user's prompt
