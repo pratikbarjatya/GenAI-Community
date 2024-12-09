@@ -11,8 +11,6 @@
 
 This repository contains the code for the GenAI Community project, which was part of a hackathon hosted by [GenAI Works](https://genai.works/hackathon).
 
-![logo](https://github.com/user-attachments/assets/2edaa7a3-204b-446a-b6d6-89ed638f0983)
-
 
 ## Overview
 
