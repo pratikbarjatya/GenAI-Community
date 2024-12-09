@@ -1,68 +1,79 @@
-import openai
-import requests
+from diffusers import StableDiffusionPipeline
+from transformers import pipeline
 from PIL import Image, ImageDraw, ImageFont
+import requests
 from io import BytesIO
-from transformers import pipeline, StableDiffusionPipeline
-import os
 
-# Set your Hugging Face token
+# Hugging Face API Token
 HUGGING_FACE_TOKEN = "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"
 
-# Function to log errors to a file
+# Logging Function
 def log_error(message):
     """Logs error messages to a file."""
     with open("error_logs.txt", "a") as log_file:
         log_file.write(f"{message}\n")
 
-# Text Generation using Hugging Face GPT (GPT-2 or GPT-3)
+# 1. Text Post Generation
 def generate_text_post(summary, tone, platform):
+    """Generates a text post using Hugging Face GPT-2."""
     try:
-        # Load text generation model (GPT-2 or GPT-3 via Hugging Face)
         generator = pipeline("text-generation", model="gpt2", tokenizer="gpt2", use_auth_token=HUGGING_FACE_TOKEN)
-        
-        # Format the post with tone and platform
         prompt = f"Generate a {tone} {platform} post: {summary}"
-
-        # Generate the text post
         post = generator(prompt, max_length=100, num_return_sequences=1)[0]["generated_text"]
         return post
     except Exception as e:
-        error_message = f"Error generating text post: {e}"
-        log_error(error_message)
-        return error_message
+        log_error(f"Error generating text post: {e}")
+        return "Error generating text post."
 
-# Image Generation using Stable Diffusion or DALL·E (Hugging Face)
+# 2. Image Generation using Stable Diffusion
 def generate_image(prompt):
+    """Generates an image using Stable Diffusion."""
     try:
-        # Load Stable Diffusion model for image generation
-        pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v-1-4-original", use_auth_token=HUGGING_FACE_TOKEN)
-        
-        # Generate the image
+        pipe = StableDiffusionPipeline.from_pretrained(
+            "runwayml/stable-diffusion-v1-5", use_auth_token=HUGGING_FACE_TOKEN
+        )
         image = pipe(prompt).images[0]
-        image.save("generated_image.png")
-        return "generated_image.png"
+        image_path = "generated_image.png"
+        image.save(image_path)
+        return image_path
     except Exception as e:
-        error_message = f"Error generating image: {e}"
-        log_error(error_message)
-        return error_message
+        log_error(f"Error generating image: {e}")
+        return None
 
-# Meme Generation by adding text to a template using PIL
-def generate_meme(caption):
+# 3. Video Generation
+def generate_video(prompt):
+    """Generates a video using Hugging Face API."""
     try:
-        # Example meme template (using the 'Distracted Boyfriend' meme template)
-        meme_url = "https://i.imgflip.com/1bij.jpg"  # Replace with actual URL
+        api_url = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5"
+        headers = {"Authorization": f"Bearer {HUGGING_FACE_TOKEN}"}
+        payload = {"inputs": prompt}
+        response = requests.post(api_url, headers=headers, json=payload)
+        response.raise_for_status()
+        video_url = response.json().get("generated_video_url")
+        if not video_url:
+            raise Exception("API did not return a video URL.")
+        video_response = requests.get(video_url)
+        video_path = "generated_video.mp4"
+        with open(video_path, "wb") as f:
+            f.write(video_response.content)
+        return video_path
+    except Exception as e:
+        log_error(f"Error generating video: {e}")
+        return None
+
+# 4. Meme Generation
+def generate_meme(caption):
+    """Generates a meme by overlaying text on a template."""
+    try:
+        meme_url = "https://i.imgflip.com/1bij.jpg"  # Example: Drake meme
         response = requests.get(meme_url)
         image = Image.open(BytesIO(response.content))
-
-        # Add caption to the meme
         draw = ImageDraw.Draw(image)
         font = ImageFont.load_default()
         draw.text((20, 20), caption, font=font, fill="white")
-        
         meme_path = "generated_meme.jpg"
         image.save(meme_path)
         return meme_path
     except Exception as e:
-        error_message = f"Error generating meme: {e}"
-        log_error(error_message)
-        return error_message
+        log_error(f"Error generating meme: {e}")
+        return None
