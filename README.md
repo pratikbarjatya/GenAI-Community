@@ -1,5 +1,14 @@
 # GenAI Community Project
 
+[![OpenAI](https://img.shields.io/badge/OpenAI-v4-blue)](https://openai.com/)
+[![Requests](https://img.shields.io/badge/Requests-2.31.0-brightgreen)](https://pypi.org/project/requests/)
+[![Pillow](https://img.shields.io/badge/Pillow-9.3.0-orange)](https://pypi.org/project/Pillow/)
+[![Transformers](https://img.shields.io/badge/Transformers-4.33.0-blueviolet)](https://huggingface.co/transformers/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.25.0-red)](https://streamlit.io/)
+[![Python-dotenv](https://img.shields.io/badge/python--dotenv-1.0.0-yellowgreen)](https://pypi.org/project/python-dotenv/)
+[![Groq](https://img.shields.io/badge/Groq-AI-yellow)](https://groq.com/)
+[![Diffusers](https://img.shields.io/badge/Diffusers-1.14.0-lightblue)](https://huggingface.co/docs/diffusers/)
+
 This repository contains the code for the GenAI Community project, which was part of a hackathon hosted by [GenAI Works](https://genai.works/hackathon).
 
 ![logo](https://github.com/user-attachments/assets/2edaa7a3-204b-446a-b6d6-89ed638f0983)
